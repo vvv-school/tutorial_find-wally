@@ -20,15 +20,13 @@ icubcontrib_set_default_prefix()
 
 yarp_add_idl(IDL_GEN_FILES ${PROJECT_NAME}.thrift)
 
-file(GLOB source src/*.cpp)
-
 set(idl ${PROJECT_NAME}.thrift)
 set(doc ${PROJECT_NAME}.xml)
 source_group("IDL Files" FILES ${idl})
 source_group("DOC Files" FILES ${doc})
 
 include_directories(${YARP_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
-add_executable(${PROJECT_NAME} ${source} ${doc} ${idl} ${IDL_GEN_FILES})
+add_executable(${PROJECT_NAME} main.cpp ${doc} ${idl} ${IDL_GEN_FILES})
 target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
