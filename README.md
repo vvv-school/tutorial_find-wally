@@ -11,5 +11,28 @@ Tutorial
 
 We aim to walk you through the steps contained in this code that will allow the users to complete the task at hand in a short amount of time using OpenCV.
 
+How to run the module
+========
+
+##### Installing the module:
+
+```
+cd find-wally
+mkdir build
+cd build
+cmake ..
+make install
+```
+
+##### Running the module:
+```
+yarpmanager
+# open the find-wally appication
+# run and connect all modules
+# then type:
+yarp rpc /find-wally/rpc
+load image.png
+templateMatch wally.png 5
+```
 
 # [How to complete the assignment](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md)
