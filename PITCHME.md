@@ -24,7 +24,7 @@
 ### CMakeLists modifications
 
 #VSLIDE
-### CMakeLists modifications
+### CMakeLists additions
 
 ```CMakeLists
 find_package(YARP REQUIRED)
@@ -41,7 +41,7 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
                                       ${OpenCV_LIBRARIES})
 ```
 
-### Code include required
+### Code headers additions
 ```CMakeLists
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
