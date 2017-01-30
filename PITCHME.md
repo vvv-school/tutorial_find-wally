@@ -2,7 +2,6 @@
 
 ### Robot vision tutorial with OpenCV
 ### Part one
----
 #### Find Wally
 
 #VSLIDE
