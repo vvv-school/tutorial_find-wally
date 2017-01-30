@@ -40,13 +40,14 @@ include_directories(${YARP_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
                                       ${OpenCV_LIBRARIES})
 ```
+
+```CMakeLists
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
-```CMakeLists
-
 ```
+
 #HSLIDE
-### CMakeLists modifications
+### Load an image
 
 #HSLIDE
 The End :)
