@@ -43,7 +43,7 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
 ```
 ---
 ######<div style="text-align: left;">Code headers additions </div>
-```CMakeLists
+```c++
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
 ```
@@ -53,9 +53,9 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
 
 #VSLIDE
 ### Load an image
----
+
 ######<div style="text-align: left;">IDL Services </div>
-```CMakeLists
+```c++
 /**
  * Load the two required images.
  * @param mainImage name of the image to be loaded.
@@ -66,7 +66,7 @@ bool load(1:string image);
 ---
 
 ######<div style="text-align: left;">Code </div>
-```CMakeLists
+```c++
 yarp::os::ResourceFinder rf;
 rf.setVerbose();
 rf.setDefaultContext(this->rf->getContext().c_str());
@@ -82,20 +82,20 @@ inputImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
 #VSLIDE
 ### Stream the image onto a YARP port
 
-```CMakeLists
+```c++
 yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >    imageOutPort;
 
 ```
 ---
-```CMakeLists
+```c++
 imageOutPort.open(("/"+getName("/image:o")).c_str());
 ```
 ---
-```CMakeLists
+```c++
 imageOutPort.close();
 ```
 ---
-```CMakeLists
+```c++
 cvtColor(out_image, out_image, CV_BGR2RGB);
 
 IplImage yarpImg = out_image;
