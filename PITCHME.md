@@ -65,15 +65,7 @@ bool load(1:string image);
 ```
 ---
 
-<!--div style="text-align: center;">
-    <span style="border:1px solid red;">
-        This is some text in a div element!
-    </span>
-</div-->
-######<span align="center" style="border:1px solid red;">
-    Code
-</span>
-<!--###### <span text-align="center" >Code</span>-->
+######<div style="text-align: left;">Code </div>
 ```CMakeLists
 yarp::os::ResourceFinder rf;
 rf.setVerbose();
