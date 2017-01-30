@@ -113,9 +113,11 @@ imageOutPort.write();
 ######<div style="text-align: left;">IDL Services </div>
 ```c++
 /**
- * use template matching on image with desired template and desired method
+ * use template matching on image with desired template and
+ * desired method
  * @param template name of the image to be loaded.
- * @param name of method: 0=SQDIFF, 1=SQDIFF NORMED, 2=TM CCORR, 3=TM CCORR NORMED, 4=TM COEFF, 5=TM COEFF NORMED
+ * @param name of method: 0=SQDIFF, 1=SQDIFF NORMED,
+ * 2=TM CCORR, 3=TM CCORR NORMED, 4=TM COEFF, 5=TM COEFF NORMED
  * @return Bottle containing the 2D position.
  *
  */
