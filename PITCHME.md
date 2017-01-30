@@ -6,11 +6,11 @@
 
 #VSLIDE
 ### Goals of this Tutorial
- - find wally :-)
- - integrating YARP with OpenCV
- - yarp::os::RFModule
- - Thrift services
- - performing simple image processing operations
+ - find <span style="color:#e49436">Wally</span> :-)
+ - integrating <span style="color:#e49436">YARP</span> with <span style="color:#e49436">OpenCV</span>
+ - yarp::os::<span style="color:#e49436">RFModule</span>
+ - <span style="color:#e49436">Thrift</span> services
+ - performing simple <span style="color:#e49436">image processing</span> operations
 
 #HSLIDE
 
