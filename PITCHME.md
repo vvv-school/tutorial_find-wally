@@ -109,7 +109,7 @@ imageOutPort.write();
 ### Run the template tracker algorithm
 
 #VSLIDE
-### Stream the image onto a YARP port
+### Run the template tracker algorithm
 ######<div style="text-align: left;">IDL Services </div>
 ```c++
 /**
@@ -123,8 +123,11 @@ Bottle templateMatch(1:string image, 2:i32 method);
 ```
 ######<div style="text-align: left;">template methods </div>
 ```c++
-//Use the OpenCV function matchTemplate to search for matches between an image patch and an input image
-//Use the OpenCV function minMaxLoc to find the maximum and minimum values (as well as their positions) in a given array.
+//Use the OpenCV function matchTemplate to search for matches between an
+//image patch and an input image
+
+//Use the OpenCV function minMaxLoc to find the maximum and minimum values
+//(as well as their positions) in a given array.
 ```
 
 
