@@ -104,5 +104,18 @@ cvCopy( &yarpImg, (IplImage *) outImg.getIplImage());
 
 imageOutPort.write();
 ```
+
+#HSLIDE
+### Run the template tracker algorithm
+######<div style="text-align: left;">Load the template </div>
+```c++
+yarp::os::ResourceFinder rf;
+rf.setVerbose();
+rf.setDefaultContext(this->rf->getContext().c_str());
+std::string imageStr = rf.findFile(image.c_str());
+
+templateImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
+```c++
+
 #HSLIDE
 The End :)
