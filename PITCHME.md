@@ -4,7 +4,7 @@
 ### <span style="color:#e49436">Part One</span>
 #### Find Wally
 
-#VSLIDE
+#HSLIDE
 ### Goals of this Tutorial
  - find <span style="color:#e49436">Wally</span> :-)
  - integrating <span style="color:#e49436">YARP</span> with <span style="color:#e49436">OpenCV</span>
@@ -12,7 +12,7 @@
  - <span style="color:#e49436">Thrift</span> services
  - performing simple <span style="color:#e49436">image processing</span> operations
 
-#VSLIDE
+#HSLIDE
 ### Let's plan what to do...
  - Change <span style="color:#e49436">CMakeLists.txt</span> to find <span style="color:#e49436">OpenCV</span> correctly
  - <span style="color:#e49436">Load</span> image containing the full scene.
@@ -23,17 +23,20 @@
 #HSLIDE
 ### CMakeLists modifications
 
-```cpp
+#VSLIDE
+### CMakeLists modifications
+
+```CMakeLists
 find_package(YARP REQUIRED)
 find_package(ICUBcontrib REQUIRED)
 find_package(OpenCV REQUIRED)
 ```
 
-```cpp
+```CMakeLists
 include_directories(${YARP_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 ```
 
-```cpp
+```CMakeLists
 target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})
 ```
 
