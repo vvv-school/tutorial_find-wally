@@ -64,7 +64,16 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
 bool load(1:string image);
 ```
 ---
-###### Code text-align: center;
+
+<!--div style="text-align: center;">
+    <span style="border:1px solid red;">
+        This is some text in a div element!
+    </span>
+</div-->
+######<span align="center" style="border:1px solid red;">
+    Code
+</span>
+<!--###### <span text-align="center" >Code</span>-->
 ```CMakeLists
 yarp::os::ResourceFinder rf;
 rf.setVerbose();
