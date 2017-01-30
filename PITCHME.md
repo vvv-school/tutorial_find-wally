@@ -55,6 +55,21 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
 ### Load an image
 
 ```CMakeLists
+/**
+ * Load the two required images.
+ * @param mainImage name of the image to be loaded.
+ * @return true/false on success/failure.
+ */
+bool load(1:string image);
+```
+---
+```CMakeLists
+yarp::os::ResourceFinder rf;
+rf.setVerbose();
+rf.setDefaultContext(this->rf->getContext().c_str());
+
+std::string imageStr = rf.findFile(image.c_str());
+
 cv::Mat inputImage;
 inputImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
 ```
