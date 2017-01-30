@@ -12,7 +12,7 @@
  - <span style="color:#e49436">Thrift</span> services
  - performing simple <span style="color:#e49436">image processing</span> operations
 
-#HSLIDE
+#VSLIDE
 ### Let's plan what to do...
  - Change <span style="color:#e49436">CMakeLists.txt</span> to find <span style="color:#e49436">OpenCV</span> correctly
  - <span style="color:#e49436">Load</span> image containing the full scene.
