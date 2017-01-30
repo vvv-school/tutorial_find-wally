@@ -53,7 +53,9 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
 
 #VSLIDE
 ### Load an image
+#### IDL service
 
+---
 ```CMakeLists
 /**
  * Load the two required images.
