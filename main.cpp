@@ -138,8 +138,8 @@ class Finder : public yarp::os::RFModule,
 
             x_pos = matchLoc.x;
             y_pos = matchLoc.y;
-            pos.addDouble(matchLoc.x);
-            pos.addDouble(matchLoc.y);
+            pos.addDouble(x_pos);
+            pos.addDouble(y_pos);
         }
 
         mutex.post();

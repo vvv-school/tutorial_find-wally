@@ -107,15 +107,26 @@ imageOutPort.write();
 
 #HSLIDE
 ### Run the template tracker algorithm
-######<div style="text-align: left;">Load the template </div>
-```c++
-yarp::os::ResourceFinder rf;
-rf.setVerbose();
-rf.setDefaultContext(this->rf->getContext().c_str());
-std::string imageStr = rf.findFile(image.c_str());
 
-templateImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
+#VSLIDE
+### Stream the image onto a YARP port
+######<div style="text-align: left;">IDL Services </div>
 ```c++
+/**
+ * use template matching on image with desired template and desired method
+ * @param template name of the image to be loaded.
+ * @param name of method: 0=SQDIFF, 1=SQDIFF NORMED, 2=TM CCORR, 3=TM CCORR NORMED, 4=TM COEFF, 5=TM COEFF NORMED
+ * @return Bottle containing the 2D position.
+ *
+ */
+Bottle templateMatch(1:string image, 2:i32 method);
+```
+######<div style="text-align: left;">template methods </div>
+```c++
+//Use the OpenCV function matchTemplate to search for matches between an image patch and an input image
+//Use the OpenCV function minMaxLoc to find the maximum and minimum values (as well as their positions) in a given array.
+```
+
 
 #HSLIDE
 The End :)
