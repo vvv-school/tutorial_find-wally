@@ -119,7 +119,6 @@ imageOutPort.write();
  * @param name of method: 0=SQDIFF, 1=SQDIFF NORMED,
  * 2=TM CCORR, 3=TM CCORR NORMED, 4=TM COEFF, 5=TM COEFF NORMED
  * @return Bottle containing the 2D position.
- *
  */
 Bottle templateMatch(1:string image, 2:i32 method);
 ```
@@ -132,7 +131,6 @@ void matchTemplate(InputArray image, InputArray templ, OutputArray result, int m
 //(as well as their positions) in a given array.
 void minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
 ```
-
 
 #HSLIDE
 The End :)
