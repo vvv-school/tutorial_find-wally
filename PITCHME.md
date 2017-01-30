@@ -14,11 +14,12 @@
 
 #VSLIDE
 ### Let's plan what to do...
- - Load image containing the full scene.
- - Display it: stream it through a yarp port to a yarpviewer.
- - Load wally's template and run the template matching algorithm with correct method to figure out where wally is in the scene
- - Modify the streamed image to display the location of wally.
- 
+ - Change <span style="color:#e49436">CMakeLists.txt</span> to find <span style="color:#e49436">OpenCV</span> correctly
+ - <span style="color:#e49436">Load</span> image containing the full scene.
+ - Display it: <span style="color:#e49436">stream</span> it through a <span style="color:#e49436">yarp port</span> to a <span style="color:#e49436">yarpviewer</span>.
+ - <span style="color:#e49436">Load</span> wally's <span style="color:#e49436">template</span> and run the <span style="color:#e49436">template matching</span> algorithm with correct method to figure out where wally is in the scene
+ - Modify the streamed image to <span style="color:#e49436">display</span> the <span style="color:#e49436">location</span> of wally.
+
 #HSLIDE
 
 The End :)
