@@ -26,18 +26,19 @@
 #VSLIDE
 ### CMakeLists modifications
 
-```CMakeLists
+```
 find_package(YARP REQUIRED)
 find_package(ICUBcontrib REQUIRED)
 find_package(OpenCV REQUIRED)
 ```
 
-```CMakeLists
+```
 include_directories(${YARP_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 ```
 
-```CMakeLists
-target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES} ${OpenCV_LIBRARIES})
+```
+target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
+                                      ${OpenCV_LIBRARIES})
 ```
 
 #HSLIDE
