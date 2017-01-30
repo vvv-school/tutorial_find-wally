@@ -20,7 +20,7 @@
  - <span style="color:#e49436">Load</span> wally's <span style="color:#e49436">template</span> and run the <span style="color:#e49436">template matching</span> algorithm with correct method to figure out where wally is in the scene
  - Modify the streamed image to <span style="color:#e49436">display</span> the <span style="color:#e49436">location</span> of wally.
 
-
+#HSLIDE
 ### CMakeLists modifications
 
 ```cpp
