@@ -25,8 +25,7 @@
 ### CMakeLists modifications
 
 #VSLIDE
-### CMakeLists additions
-
+######<div style="text-align: left;">CMakeLists additions </div>
 ```CMakeLists
 find_package(YARP REQUIRED)
 find_package(ICUBcontrib REQUIRED)
@@ -42,7 +41,7 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
                                       ${OpenCV_LIBRARIES})
 ```
 ---
-### Code headers additions
+######<div style="text-align: left;">Code headers additions </div>
 ```CMakeLists
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
@@ -54,7 +53,7 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
 #VSLIDE
 ### Load an image
 ---
-###### IDL service
+######<div style="text-align: left;">IDL Services </div>
 ```CMakeLists
 /**
  * Load the two required images.
