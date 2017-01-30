@@ -1,6 +1,6 @@
 #HSLIDE
 
-### Robot vision with OpenCV tutorial part one 
+### Robot vision tutorial with OpenCV - part one 
 
 #HSLIDE
 find wally
