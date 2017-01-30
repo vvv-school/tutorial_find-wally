@@ -6,7 +6,7 @@
 
 ![Logo](assets/lbpExtract.png)
 
-#HSLIDE?image=assets/bg.jpg
+#HSLIDE
 
 #VSLIDE
 ### Robot vision tutorial with OpenCV
