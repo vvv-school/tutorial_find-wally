@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2016 iCub Facility - Istituto Italiano di Tecnologia
  * Author: Vadim Tikhanoff
  * email:  vadim.tikhanoff@iit.it
@@ -36,25 +36,25 @@ class Finder : public yarp::os::RFModule,
     yarp::os::ResourceFinder *rf;
     yarp::os::RpcServer rpcPort;
     yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >    imageOutPort;
-    
+
     std::string outImgPortName;
-    
+
     yarp::os::Semaphore mutex;
-    
+
     cv::Mat inputImage;
     cv::Mat templateImage;
     cv::Mat out_image;
-    
+
     double x_pos, y_pos;
-    
+
     bool closing;
-    
+
     /********************************************************/
     bool attach(yarp::os::RpcServer &source)
     {
         return this->yarp().attachAsServer(source);
     }
-    
+
     /********************************************************/
     bool load(const std::string &image)
     {
@@ -62,42 +62,42 @@ class Finder : public yarp::os::RFModule,
         yarp::os::ResourceFinder rf;
         rf.setVerbose();
         rf.setDefaultContext(this->rf->getContext().c_str());
-        
+
         std::string imageStr = rf.findFile(image.c_str());
-        
+
         yDebug() << "image path is:" << imageStr;
-        
+
         inputImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
-        if(! inputImage.data )                              // Check for invalid input
+        if(! inputImage.data )
         {
             yError() <<"Could not open or find the first image " << imageStr;
             mutex.post();
             return false;
         }
-        
+
         x_pos = -1.0;
         y_pos = -1.0;
-        
+
         mutex.post();
-        
+
         return true;
     }
-    
+
     /********************************************************/
     yarp::os::Bottle templateMatch (const std::string &image, const int method)
     {
         yarp::os::Bottle pos;
-        
+
         mutex.wait();
         yarp::os::ResourceFinder rf;
         rf.setVerbose();
         rf.setDefaultContext(this->rf->getContext().c_str());
         std::string imageStr = rf.findFile(image.c_str());
-        
+
         yDebug() << "image path is:" << imageStr;
-        
+
         templateImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
-        
+
         if(! templateImage.data || ! inputImage.data )
         {
             yError("Either there is no main image, or the template is invalid");
@@ -109,12 +109,12 @@ class Finder : public yarp::os::RFModule,
         else
         {
             cv::Mat result;
-            
+
             int result_cols =  inputImage.cols - templateImage.cols + 1;
             int result_rows = inputImage.rows - templateImage.rows + 1;
-            
+
             result.create( result_rows, result_cols, CV_32FC1 );
-            
+
             if (method == cv::TM_SQDIFF || method == cv::TM_CCORR_NORMED)
             {
                 cv::Mat mask;
@@ -122,31 +122,31 @@ class Finder : public yarp::os::RFModule,
             }
             else
                 matchTemplate( inputImage, templateImage, result, method);
-            
+
             normalize( result, result, 0, 1, cv::NORM_MINMAX, -1, cv::Mat() );
             double minVal; double maxVal; cv::Point minLoc; cv::Point maxLoc;
             cv::Point matchLoc;
-            
+
             minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
-            
+
             if( method  == cv::TM_SQDIFF || method == cv::TM_SQDIFF_NORMED )
             {
                 matchLoc = minLoc;
             }
             else
                 matchLoc = maxLoc;
-        
+
             x_pos = matchLoc.x;
             y_pos = matchLoc.y;
             pos.addDouble(matchLoc.x);
             pos.addDouble(matchLoc.y);
         }
-        
+
         mutex.post();
-        
+
         return pos;
     }
-    
+
     /********************************************************/
     yarp::os::Bottle getLocation()
     {
@@ -154,38 +154,38 @@ class Finder : public yarp::os::RFModule,
         position.clear();
         position.addDouble(x_pos);
         position.addDouble(y_pos);
-        
+
         return position;
     }
-    
+
     /********************************************************/
     bool quit()
     {
         closing = true;
         return true;
     }
-    
+
     public:
     /********************************************************/
     bool configure(yarp::os::ResourceFinder &rf)
     {
         this->rf=&rf;
-        
+
         std::string moduleName = rf.check("name", yarp::os::Value("find-wally"), "module name (string)").asString();
         setName(moduleName.c_str());
-        
+
         rpcPort.open(("/"+getName("/rpc")).c_str());
         imageOutPort.open(("/"+getName("/image:o")).c_str());
-        
+
         y_pos = -1.0;
         x_pos = -1.0;
-        
+
         closing = false;
-        
+
         attach(rpcPort);
         return true;
     }
-    
+
     /********************************************************/
     bool close()
     {
@@ -193,55 +193,55 @@ class Finder : public yarp::os::RFModule,
         rpcPort.close();
         imageOutPort.close();
         mutex.post();
-        
+
         return true;
     }
-    
+
     /********************************************************/
     double getPeriod()
     {
         return 1.0;
     }
-    
+
     /********************************************************/
     bool updateModule()
     {
         mutex.wait();
         yarp::sig::ImageOf<yarp::sig::PixelRgb> &outImg  = imageOutPort.prepare();
-            
+
         if( inputImage.data)
         {
             out_image = inputImage.clone();
-            
+
             if (x_pos > 0.0 && y_pos > 0.0)
             {
                 blur( out_image, out_image, cv::Size( 10, 10 ) ); //blur the output image
-                
+
                 out_image.convertTo(out_image, CV_8U, 0.5, 0);    //decrease contrast to half
-                
+
                 cv::Rect roi = cv::Rect(x_pos, y_pos, templateImage.cols, templateImage.rows);
-             
+
                 cv::Mat input_roi= inputImage(roi);
-                
+
                 cv::Mat foreground(input_roi.size(), CV_8UC3, cv::Scalar(0,0,0));
-                
+
                 input_roi.copyTo(foreground, input_roi);
-                
+
                 foreground.copyTo(out_image(cv::Rect(x_pos, y_pos, foreground.cols, foreground.rows)));
-            
+
                 cv::rectangle(out_image, cvPoint(x_pos,y_pos), cvPoint(x_pos + templateImage.cols,y_pos + templateImage.rows), cv::Scalar( 0, 255, 0), 2, 8, 0);
             }
-            
+
             cvtColor(out_image, out_image, CV_BGR2RGB);
-            
+
             IplImage yarpImg = out_image;
             outImg.resize(yarpImg.width, yarpImg.height);
             cvCopy( &yarpImg, (IplImage *) outImg.getIplImage());
-        
+
             imageOutPort.write();
         }
         mutex.post();
-    
+
         return !closing;
     }
 };
@@ -250,7 +250,7 @@ class Finder : public yarp::os::RFModule,
 int main(int argc, char *argv[])
 {
     yarp::os::Network::init();
-    
+
     yarp::os::Network yarp;
     if (!yarp.checkNetwork())
     {
@@ -260,14 +260,12 @@ int main(int argc, char *argv[])
 
     Finder module;
     yarp::os::ResourceFinder rf;
-    
+
     rf.setVerbose();
     rf.setDefaultConfigFile( "config.ini" );
     rf.setDefaultContext("find-wally");
-    
+
     rf.configure(argc,argv);
 
     return module.runModule(rf);
 }
-
-

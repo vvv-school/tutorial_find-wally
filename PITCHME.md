@@ -1,8 +1,8 @@
 #HSLIDE
 
 ### Robot vision tutorial with OpenCV
----
 ### <span style="color:#e49436">Part One</span>
+---
 #### Find Wally
 
 #HSLIDE
@@ -50,6 +50,11 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
 
 #HSLIDE
 ### Load an image
+
+```CMakeLists
+#include <opencv2/core/core.hpp>
+#include <opencv2/opencv.hpp>
+```
 
 #HSLIDE
 The End :)
