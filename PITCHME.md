@@ -51,6 +51,9 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
 #HSLIDE
 ### Load an image
 
+#HSLIDE
+### Load an image
+
 ```CMakeLists
 cv::Mat inputImage;
 inputImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
