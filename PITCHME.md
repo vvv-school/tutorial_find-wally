@@ -55,13 +55,6 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
 cv::Mat inputImage;
 inputImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
 ```
-#HSLIDE
-### Load an image
-
-```CMakeLists
-cv::Mat inputImage;
-inputImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
-```
 ---
 ### Stream the image onto a YARP port
 ```CMakeLists
