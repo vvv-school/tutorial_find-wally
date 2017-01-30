@@ -1,15 +1,6 @@
 #HSLIDE
 
 ### Robot vision tutorial with OpenCV
-#VSLIDE
-### Typical use of Vision on the iCub + R1
-
-![Logo](assets/lbpExtract.png)
-
-#HSLIDE
-
-#VSLIDE
-### Robot vision tutorial with OpenCV
 ### <span style="color:#e49436">Part One</span>
 #### Find Wally
 
