@@ -2,6 +2,7 @@
 
 ### Robot vision tutorial with OpenCV
 ### <span style="color:#e49436">Part One</span>
+---
 #### Find Wally
 
 #HSLIDE
