@@ -54,7 +54,7 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
 #VSLIDE
 ### Load an image
 ---
-####### IDL service
+###### IDL service
 ```CMakeLists
 /**
  * Load the two required images.
@@ -64,7 +64,7 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
 bool load(1:string image);
 ```
 ---
-####### Code
+###### Code text-align: center;
 ```CMakeLists
 yarp::os::ResourceFinder rf;
 rf.setVerbose();
