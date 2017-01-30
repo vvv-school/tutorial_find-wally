@@ -126,8 +126,11 @@ Bottle templateMatch(1:string image, 2:i32 method);
 //Use the OpenCV function matchTemplate to search for matches between an
 //image patch and an input image
 
+void matchTemplate(InputArray image, InputArray templ, OutputArray result, int method);
+
 //Use the OpenCV function minMaxLoc to find the maximum and minimum values
 //(as well as their positions) in a given array.
+void minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
 ```
 
 
