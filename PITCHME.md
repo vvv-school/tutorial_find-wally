@@ -52,9 +52,39 @@ target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
 ### Load an image
 
 ```CMakeLists
-#include <opencv2/core/core.hpp>
-#include <opencv2/opencv.hpp>
+cv::Mat inputImage;
+inputImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
 ```
+#HSLIDE
+### Load an image
 
+```CMakeLists
+cv::Mat inputImage;
+inputImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
+```
+---
+### Stream the image onto a YARP port
+```CMakeLists
+yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >    imageOutPort;
+
+```
+---
+```CMakeLists
+imageOutPort.open(("/"+getName("/image:o")).c_str());
+```
+---
+```CMakeLists
+imageOutPort.close();
+```
+---
+```CMakeLists
+cvtColor(out_image, out_image, CV_BGR2RGB);
+
+IplImage yarpImg = out_image;
+outImg.resize(yarpImg.width, yarpImg.height);
+cvCopy( &yarpImg, (IplImage *) outImg.getIplImage());
+
+imageOutPort.write();
+```
 #HSLIDE
 The End :)
