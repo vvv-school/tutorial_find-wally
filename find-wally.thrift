@@ -11,20 +11,20 @@ struct Bottle{}
 )
 
 /**
-* adaptFrames_IDL
+* findWally_IDL
 *
-* IDL Interface to \ref Adapt Frames Module.
+* IDL Interface to \ref Find Wally Module.
 */
 service findWally_IDL
 {
-    
+
     /**
      * Load the two required images.
      * @param mainImage name of the image to be loaded.
      * @return true/false on success/failure.
      */
     bool load(1:string image);
-    
+
     /**
      * use template matching on image with desired template and desired method
      * @param template name of the image to be loaded.
@@ -33,13 +33,13 @@ service findWally_IDL
      *
      */
     Bottle templateMatch(1:string image, 2:i32 method);
-    
+
     /**
      * Gets the location of wally in the 2D image.
      * @return Bottle containing the 2D position.
      */
     Bottle getLocation();
-    
+
     /**
      * Quit the module.
      * @return true/false on success/failure
