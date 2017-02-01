@@ -21,7 +21,7 @@
 #include <yarp/os/Network.h>
 #include <yarp/os/Log.h>
 #include <yarp/os/LogStream.h>
-#include <yarp/os/Semaphore.h>
+#include <yarp/os/Mutex.h>
 #include <yarp/sig/Image.h>
 
 #include <opencv2/core/core.hpp>
@@ -39,7 +39,7 @@ class Finder : public yarp::os::RFModule,
 
     std::string outImgPortName;
 
-    yarp::os::Semaphore mutex;
+    yarp::os::Mutex mutex;
 
     cv::Mat inputImage;
     cv::Mat templateImage;
@@ -58,7 +58,7 @@ class Finder : public yarp::os::RFModule,
     /********************************************************/
     bool load(const std::string &image)
     {
-        mutex.wait();
+        mutex.lock();
         yarp::os::ResourceFinder rf;
         rf.setVerbose();
         rf.setDefaultContext(this->rf->getContext().c_str());
@@ -71,14 +71,14 @@ class Finder : public yarp::os::RFModule,
         if(! inputImage.data )
         {
             yError() <<"Could not open or find the first image " << imageStr;
-            mutex.post();
+            mutex.unlock();
             return false;
         }
 
         x_pos = -1.0;
         y_pos = -1.0;
 
-        mutex.post();
+        mutex.unlock();
 
         return true;
     }
@@ -88,7 +88,7 @@ class Finder : public yarp::os::RFModule,
     {
         yarp::os::Bottle pos;
 
-        mutex.wait();
+        mutex.lock();
         yarp::os::ResourceFinder rf;
         rf.setVerbose();
         rf.setDefaultContext(this->rf->getContext().c_str());
@@ -109,12 +109,13 @@ class Finder : public yarp::os::RFModule,
         else
         {
             cv::Mat result;
-
             int result_cols =  inputImage.cols - templateImage.cols + 1;
             int result_rows = inputImage.rows - templateImage.rows + 1;
 
+            //create the resulting image in grayscale
             result.create( result_rows, result_cols, CV_32FC1 );
 
+            //Check requested template tracking method and call function
             if (method == cv::TM_SQDIFF || method == cv::TM_CCORR_NORMED)
             {
                 cv::Mat mask;
@@ -123,9 +124,13 @@ class Finder : public yarp::os::RFModule,
             else
                 matchTemplate( inputImage, templateImage, result, method);
 
+            //Normalizes the norm
             normalize( result, result, 0, 1, cv::NORM_MINMAX, -1, cv::Mat() );
+
             double minVal; double maxVal; cv::Point minLoc; cv::Point maxLoc;
             cv::Point matchLoc;
+
+            //Find minimum value and maximum value and get the location in 2D point
 
             minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
 
@@ -136,13 +141,14 @@ class Finder : public yarp::os::RFModule,
             else
                 matchLoc = maxLoc;
 
+            //Use the previous location to fill in the bottle
             x_pos = matchLoc.x;
             y_pos = matchLoc.y;
             pos.addDouble(x_pos);
             pos.addDouble(y_pos);
         }
 
-        mutex.post();
+        mutex.unlock();
 
         return pos;
     }
@@ -150,10 +156,12 @@ class Finder : public yarp::os::RFModule,
     /********************************************************/
     yarp::os::Bottle getLocation()
     {
+        mutex.lock();
         yarp::os::Bottle position;
         position.clear();
         position.addDouble(x_pos);
         position.addDouble(y_pos);
+        mutex.unlock();
 
         return position;
     }
@@ -189,10 +197,10 @@ class Finder : public yarp::os::RFModule,
     /********************************************************/
     bool close()
     {
-        mutex.wait();
+        mutex.lock();
         rpcPort.close();
         imageOutPort.close();
-        mutex.post();
+        mutex.unlock();
 
         return true;
     }
@@ -206,7 +214,7 @@ class Finder : public yarp::os::RFModule,
     /********************************************************/
     bool updateModule()
     {
-        mutex.wait();
+        mutex.lock();
         yarp::sig::ImageOf<yarp::sig::PixelRgb> &outImg  = imageOutPort.prepare();
 
         if( inputImage.data)
@@ -215,20 +223,22 @@ class Finder : public yarp::os::RFModule,
 
             if (x_pos > 0.0 && y_pos > 0.0)
             {
-                blur( out_image, out_image, cv::Size( 10, 10 ) ); //blur the output image
+                //blur the output image
+                blur( out_image, out_image, cv::Size( 10, 10 ) );
+                //decrease contrast to half
+                out_image.convertTo(out_image, CV_8U, 0.5, 0);
 
-                out_image.convertTo(out_image, CV_8U, 0.5, 0);    //decrease contrast to half
-
+                //setup region of interest using the size of the template and location of template matchin result
                 cv::Rect roi = cv::Rect(x_pos, y_pos, templateImage.cols, templateImage.rows);
-
+                //fill in the roi with the corresponding image
                 cv::Mat input_roi= inputImage(roi);
 
+                //Create a colour image and add the two images together
                 cv::Mat foreground(input_roi.size(), CV_8UC3, cv::Scalar(0,0,0));
-
                 input_roi.copyTo(foreground, input_roi);
-
                 foreground.copyTo(out_image(cv::Rect(x_pos, y_pos, foreground.cols, foreground.rows)));
 
+                //Draw a rectangle around the result
                 cv::rectangle(out_image, cvPoint(x_pos,y_pos), cvPoint(x_pos + templateImage.cols,y_pos + templateImage.rows), cv::Scalar( 0, 255, 0), 2, 8, 0);
             }
 
@@ -240,7 +250,7 @@ class Finder : public yarp::os::RFModule,
 
             imageOutPort.write();
         }
-        mutex.post();
+        mutex.unlock();
 
         return !closing;
     }
