@@ -222,7 +222,9 @@ class Finder : public yarp::os::RFModule,
 
             if (x_pos > 0.0 && y_pos > 0.0)
             {
-                
+                //
+                // Let's fill it in
+                //
             }
 
             cvtColor(out_image, out_image, CV_BGR2RGB);
