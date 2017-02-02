@@ -239,7 +239,7 @@ class Finder : public yarp::os::RFModule,
                 foreground.copyTo(out_image(cv::Rect(x_pos, y_pos, foreground.cols, foreground.rows)));
 
                 //Draw a rectangle around the result
-                cv::rectangle(out_image, cvPoint(x_pos,y_pos), cvPoint(x_pos + templateImage.cols,y_pos + templateImage.rows), cv::Scalar( 0, 255, 0), 2, 8, 0);
+                cv::rectangle(out_image, cvPoint(x_pos, y_pos), cvPoint(x_pos + templateImage.cols, y_pos + templateImage.rows), cv::Scalar( 0, 255, 0), 2);
             }
 
             cvtColor(out_image, out_image, CV_BGR2RGB);
