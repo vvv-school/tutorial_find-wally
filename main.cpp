@@ -131,7 +131,6 @@ class Finder : public yarp::os::RFModule,
             cv::Point matchLoc;
 
             //Find minimum value and maximum value and get the location in 2D point
-
             minMaxLoc( result, &minVal, &maxVal, &minLoc, &maxLoc, cv::Mat() );
 
             if( method  == cv::TM_SQDIFF || method == cv::TM_SQDIFF_NORMED )
@@ -224,7 +223,8 @@ class Finder : public yarp::os::RFModule,
             if (x_pos > 0.0 && y_pos > 0.0)
             {
                 //blur the output image
-                blur( out_image, out_image, cv::Size( 10, 10 ) );
+                //The kernel size will determine how many pixels to sample during the convolution.
+                cv::blur( out_image, out_image, cv::Size( 10, 10 ) );
                 //decrease contrast to half
                 out_image.convertTo(out_image, CV_8U, 0.5, 0);
 
@@ -243,7 +243,7 @@ class Finder : public yarp::os::RFModule,
             }
 
             cvtColor(out_image, out_image, CV_BGR2RGB);
-
+            
             IplImage yarpImg = out_image;
             outImg.resize(yarpImg.width, yarpImg.height);
             cvCopy( &yarpImg, (IplImage *) outImg.getIplImage());
