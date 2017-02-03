@@ -96,7 +96,7 @@ imageOutPort.close();
 ```
 ---
 ```c++
-cvtColor(out_image, out_image, CV_BGR2RGB);
+yarp::sig::ImageOf<yarp::sig::PixelRgb> &outImg  = imageOutPort.prepare();
 
 IplImage yarpImg = out_image;
 outImg.resize(yarpImg.width, yarpImg.height);
