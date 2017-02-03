@@ -36,7 +36,10 @@ yarp rpc /find-wally/rpc
 load image.png
 templateMatch wally.png 5
 ```
+Correlation methods 
+0=SQDIFF, 1=SQDIFF NORMED, 2=TM CCORR, 3=TM CCORR NORMED, 4=TM COEFF, 5=TM COEFF NORMED
 
-For information on corresponence problem look at the following ![find-wally](/assets/methods.png)
+For information on corresponence methods have a look at the following image:
+![find-wally](/assets/methods.png)
 
 # [How to complete the assignment](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md)
