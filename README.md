@@ -27,7 +27,6 @@ make install
 
 ##### Running the module:
 
-For information on corresponence problem look at the following ![find-wally](/assets/methods.png)
 ```
 yarpmanager
 # open the find-wally appication
@@ -37,5 +36,7 @@ yarp rpc /find-wally/rpc
 load image.png
 templateMatch wally.png 5
 ```
+
+For information on corresponence problem look at the following ![find-wally](/assets/methods.png)
 
 # [How to complete the assignment](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md)
