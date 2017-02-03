@@ -98,9 +98,9 @@ class Finder : public yarp::os::RFModule,
 
         templateImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
 
-        if(! templateImage.data || ! inputImage.data )
+        if(! templateImage.data || ! inputImage.data || method < 0 || method > 5 )
         {
-            yError("Either there is no main image, or the template is invalid");
+            yError("Either there is no main image, the template is invalid or the method requested is wrong");
             x_pos = -1.0;
             y_pos = -1.0;
             pos.addDouble(x_pos);
