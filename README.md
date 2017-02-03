@@ -27,7 +27,7 @@ make install
 
 ##### Running the module:
 
-For information on corresponence problem look at the following [info](/misc/method.gif)
+For information on corresponence problem look at the following [info](/assets/method.gif)
 ```
 yarpmanager
 # open the find-wally appication
