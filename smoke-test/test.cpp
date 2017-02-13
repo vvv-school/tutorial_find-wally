@@ -7,8 +7,10 @@
 #include <cmath>
 #include <algorithm>
 
-#include <rtf/yarp/YarpTestCase.h>
+#include <yarp/rtf/TestCase.h>
 #include <rtf/dll/Plugin.h>
+#include <rtf/TestAssert.h>
+
 
 #include <yarp/os/Network.h>
 #include <yarp/os/RpcClient.h>
@@ -16,14 +18,14 @@
 using namespace RTF;
 
 /**********************************************************************/
-class TestTutorialFindingWally : public YarpTestCase
+class TestTutorialFindingWally : public yarp::rtf::TestCase
 {
     yarp::os::RpcClient rpcPort;
 
 public:
     /******************************************************************/
     TestTutorialFindingWally() :
-        YarpTestCase("TestTutorialFindingWally")
+        yarp::rtf::TestCase("TestTutorialFindingWally")
     {
     }
 
