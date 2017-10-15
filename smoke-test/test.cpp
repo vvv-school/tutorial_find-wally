@@ -39,8 +39,8 @@ public:
     {
         rpcPort.open("/"+getName()+"/rpc");
         RTF_TEST_REPORT(Asserter::format("The rpc port is : %s\n", rpcPort.getName().c_str()));
-        RTF_ASSERT_ERROR_IF(yarp::os::Network::connect( rpcPort.getName(), "/find-wally/rpc"),
-                            "Unable to connect to target!");
+        RTF_ASSERT_ERROR_IF_FALSE(yarp::os::Network::connect( rpcPort.getName(), "/find-wally/rpc"),
+                                  "Unable to connect to target!");
 
         return true;
     }
