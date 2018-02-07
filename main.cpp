@@ -244,11 +244,12 @@ class Finder : public yarp::os::RFModule,
                 cv::rectangle(out_image, cvPoint(x_pos,y_pos), cvPoint(x_pos + templateImage.cols,y_pos + templateImage.rows), cv::Scalar( 0, 255, 0), 2, 8, 0);
             }
 
-            //cvtColor(out_image, out_image, CV_BGR2RGB);
+            cvtColor(out_image, out_image, CV_BGR2RGB);
+
             IplImage yarpImg = out_image;
             outImg.resize(yarpImg.width, yarpImg.height);
-            //cvCopy( &yarpImg, (IplImage *) outImg.getIplImage());
-            outImg.wrapIplImage(&yarpImg);
+            cvCopy( &yarpImg, (IplImage *) outImg.getIplImage());
+            //outImg.wrapIplImage(&yarpImg);
             imageOutPort.write();
         }
         mutex.unlock();
