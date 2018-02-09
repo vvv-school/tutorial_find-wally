@@ -224,11 +224,11 @@ class Finder : public yarp::os::RFModule,
             {
                 //blur the output image
                 //The kernel size will determine how many pixels to sample during the convolution.
-                //void blur(InputArray src, OutputArray dst, Size ksize, Point anchor=Point(-1,-1), int borderType=BORDER_DEFAULT )¶
+                //void blur(InputArray src, OutputArray dst, Size ksize)
                 cv::blur( out_image, out_image, cv::Size( 10, 10 ) );
                 
                 //decrease contrast to half
-                out_image.convertTo(out_image, CV_8U, 0.5, 0);
+                out_image.convertTo(out_image, CV_8U, 0.5);
 
                 //setup region of interest using the size of the template and location of template matchin result
                 cv::Rect roi = cv::Rect(x_pos, y_pos, templateImage.cols, templateImage.rows);
@@ -242,7 +242,7 @@ class Finder : public yarp::os::RFModule,
                 foreground.copyTo(out_image(cv::Rect(x_pos, y_pos, foreground.cols, foreground.rows)));
 
                 //Draw a rectangle around the result
-                cv::rectangle(out_image, cvPoint(x_pos,y_pos), cvPoint(x_pos + templateImage.cols,y_pos + templateImage.rows), cv::Scalar( 0, 255, 0), 2, 8, 0);
+                cv::rectangle(out_image, cvPoint(x_pos,y_pos), cvPoint(x_pos + templateImage.cols,y_pos + templateImage.rows), cv::Scalar( 0, 255, 0), 2, 8);
             }
 
             cvtColor(out_image, out_image, CV_BGR2RGB);
