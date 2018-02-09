@@ -224,6 +224,7 @@ class Finder : public yarp::os::RFModule,
             {
                 //blur the output image
                 //The kernel size will determine how many pixels to sample during the convolution.
+                //void blur(InputArray src, OutputArray dst, Size ksize, Point anchor=Point(-1,-1), int borderType=BORDER_DEFAULT )¶
                 cv::blur( out_image, out_image, cv::Size( 10, 10 ) );
                 
                 //decrease contrast to half
@@ -249,7 +250,6 @@ class Finder : public yarp::os::RFModule,
             IplImage yarpImg = out_image;
             outImg.resize(yarpImg.width, yarpImg.height);
             cvCopy( &yarpImg, (IplImage *) outImg.getIplImage());
-            //outImg.wrapIplImage(&yarpImg);
             imageOutPort.write();
         }
         mutex.unlock();
