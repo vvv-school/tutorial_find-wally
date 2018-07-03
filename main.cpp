@@ -15,6 +15,8 @@
  * Public License for more details
 */
 
+#include <cstdlib>
+
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/ResourceFinder.h>
 #include <yarp/os/RFModule.h>
@@ -61,9 +63,9 @@ class Finder : public yarp::os::RFModule,
         mutex.lock();
         yarp::os::ResourceFinder rf;
         rf.setVerbose();
-        rf.setDefaultContext(this->rf->getContext().c_str());
+        rf.setDefaultContext(this->rf->getContext());
 
-        std::string imageStr = rf.findFile(image.c_str());
+        std::string imageStr = rf.findFile(image);
 
         yDebug() << "image path is:" << imageStr;
 
@@ -91,8 +93,8 @@ class Finder : public yarp::os::RFModule,
         mutex.lock();
         yarp::os::ResourceFinder rf;
         rf.setVerbose();
-        rf.setDefaultContext(this->rf->getContext().c_str());
-        std::string imageStr = rf.findFile(image.c_str());
+        rf.setDefaultContext(this->rf->getContext());
+        std::string imageStr = rf.findFile(image);
 
         yDebug() << "image path is:" << imageStr;
 
@@ -181,8 +183,8 @@ class Finder : public yarp::os::RFModule,
         std::string moduleName = rf.check("name", yarp::os::Value("find-wally"), "module name (string)").asString();
         setName(moduleName.c_str());
 
-        rpcPort.open(("/"+getName("/rpc")).c_str());
-        imageOutPort.open(("/"+getName("/image:o")).c_str());
+        rpcPort.open("/"+getName("/rpc"));
+        imageOutPort.open("/"+getName("/image:o"));
 
         y_pos = -1.0;
         x_pos = -1.0;
@@ -267,7 +269,7 @@ int main(int argc, char *argv[])
     if (!yarp.checkNetwork())
     {
         yError()<<"YARP server not available!";
-        return 1;
+        return EXIT_FAILURE;
     }
 
     Finder module;
