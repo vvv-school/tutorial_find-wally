@@ -83,7 +83,7 @@ inputImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
 ### Stream the image onto a YARP port
 
 ```c++
-yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >    imageOutPort;
+yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb>> imageOutPort;
 
 ```
 ---
@@ -96,12 +96,8 @@ imageOutPort.close();
 ```
 ---
 ```c++
-yarp::sig::ImageOf<yarp::sig::PixelRgb> &outImg  = imageOutPort.prepare();
-
-IplImage yarpImg = out_image;
-outImg.resize(yarpImg.width, yarpImg.height);
-cvCopy( &yarpImg, (IplImage *) outImg.getIplImage());
-
+yarp::sig::ImageOf<yarp::sig::PixelRgb> &outImg = imageOutPort.prepare();
+outImg = yarp::cv::fromCvMat<yarp::sig::PixelRgb>(out_image);
 imageOutPort.write();
 ```
 

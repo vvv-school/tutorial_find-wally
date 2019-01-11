@@ -25,6 +25,7 @@
 #include <yarp/os/LogStream.h>
 #include <yarp/os/Mutex.h>
 #include <yarp/sig/Image.h>
+#include <yarp/cv/Cv.h>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
@@ -216,7 +217,7 @@ class Finder : public yarp::os::RFModule,
     bool updateModule()
     {
         mutex.lock();
-        yarp::sig::ImageOf<yarp::sig::PixelRgb> &outImg  = imageOutPort.prepare();
+        yarp::sig::ImageOf<yarp::sig::PixelRgb> &outImg = imageOutPort.prepare();
 
         if( inputImage.data)
         {
@@ -249,9 +250,7 @@ class Finder : public yarp::os::RFModule,
 
             cvtColor(out_image, out_image, CV_BGR2RGB);
 
-            IplImage yarpImg = out_image;
-            outImg.resize(yarpImg.width, yarpImg.height);
-            cvCopy( &yarpImg, (IplImage *) outImg.getIplImage());
+            outImg = yarp::cv::fromCvMat<yarp::sig::PixelRgb>(out_image);
             imageOutPort.write();
         }
         mutex.unlock();
