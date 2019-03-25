@@ -28,7 +28,7 @@
 ### CMakeLists modifications
 ######<div style="text-align: left;">CMakeLists additions </div>
 ```CMakeLists
-find_package(YARP REQUIRED)
+find_package(YARP 3.1.101 REQUIRED)
 find_package(ICUBcontrib REQUIRED)
 find_package(OpenCV REQUIRED)
 ```
