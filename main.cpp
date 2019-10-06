@@ -16,6 +16,7 @@
 */
 
 #include <cstdlib>
+#include <mutex>
 
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/ResourceFinder.h>
@@ -23,7 +24,6 @@
 #include <yarp/os/Network.h>
 #include <yarp/os/Log.h>
 #include <yarp/os/LogStream.h>
-#include <yarp/os/Mutex.h>
 #include <yarp/sig/Image.h>
 #include <yarp/cv/Cv.h>
 
@@ -42,7 +42,7 @@ class Finder : public yarp::os::RFModule,
 
     std::string outImgPortName;
 
-    yarp::os::Mutex mutex;
+    std::mutex mtx;
 
     cv::Mat inputImage;
     cv::Mat templateImage;
@@ -61,7 +61,7 @@ class Finder : public yarp::os::RFModule,
     /********************************************************/
     bool load(const std::string &image)
     {
-        mutex.lock();
+        lock_guard<mutex> lck(mtx);
         yarp::os::ResourceFinder rf;
         rf.setVerbose();
         rf.setDefaultContext(this->rf->getContext());
@@ -74,14 +74,11 @@ class Finder : public yarp::os::RFModule,
         if(! inputImage.data )
         {
             yError() <<"Could not open or find the first image " << imageStr;
-            mutex.unlock();
             return false;
         }
 
         x_pos = -1.0;
         y_pos = -1.0;
-
-        mutex.unlock();
 
         return true;
     }
@@ -91,7 +88,7 @@ class Finder : public yarp::os::RFModule,
     {
         yarp::os::Bottle pos;
 
-        mutex.lock();
+        lock_guard<mutex> lck(mtx);
         yarp::os::ResourceFinder rf;
         rf.setVerbose();
         rf.setDefaultContext(this->rf->getContext());
@@ -150,21 +147,17 @@ class Finder : public yarp::os::RFModule,
             pos.addDouble(y_pos);
         }
 
-        mutex.unlock();
-
         return pos;
     }
 
     /********************************************************/
     yarp::os::Bottle getLocation()
     {
-        mutex.lock();
+        lock_guard<mutex> lck(mtx);
         yarp::os::Bottle position;
         position.clear();
         position.addDouble(x_pos);
         position.addDouble(y_pos);
-        mutex.unlock();
-
         return position;
     }
 
@@ -199,11 +192,9 @@ class Finder : public yarp::os::RFModule,
     /********************************************************/
     bool close()
     {
-        mutex.lock();
+        lock_guard<mutex> lck(mtx);
         rpcPort.close();
         imageOutPort.close();
-        mutex.unlock();
-
         return true;
     }
 
@@ -216,7 +207,7 @@ class Finder : public yarp::os::RFModule,
     /********************************************************/
     bool updateModule()
     {
-        mutex.lock();
+        lock_guard<mutex> lck(mtx);
         yarp::sig::ImageOf<yarp::sig::PixelRgb> &outImg = imageOutPort.prepare();
 
         if( inputImage.data)
@@ -253,8 +244,7 @@ class Finder : public yarp::os::RFModule,
             outImg = yarp::cv::fromCvMat<yarp::sig::PixelRgb>(out_image);
             imageOutPort.write();
         }
-        mutex.unlock();
-
+        
         return !closing;
     }
 };
