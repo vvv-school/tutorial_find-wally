@@ -88,7 +88,7 @@ class Finder : public yarp::os::RFModule,
     {
         yarp::os::Bottle pos;
 
-        lock_guard<mutex> lck(mtx);
+        const std::lock_guard<std::mutex> lock(mtx);
         yarp::os::ResourceFinder rf;
         rf.setVerbose();
         rf.setDefaultContext(this->rf->getContext());
@@ -153,7 +153,7 @@ class Finder : public yarp::os::RFModule,
     /********************************************************/
     yarp::os::Bottle getLocation()
     {
-        lock_guard<mutex> lck(mtx);
+        const std::lock_guard<std::mutex> lock(mtx);
         yarp::os::Bottle position;
         position.clear();
         position.addDouble(x_pos);
@@ -192,7 +192,7 @@ class Finder : public yarp::os::RFModule,
     /********************************************************/
     bool close()
     {
-        lock_guard<mutex> lck(mtx);
+        const std::lock_guard<std::mutex> lock(mtx);
         rpcPort.close();
         imageOutPort.close();
         return true;
@@ -207,7 +207,7 @@ class Finder : public yarp::os::RFModule,
     /********************************************************/
     bool updateModule()
     {
-        lock_guard<mutex> lck(mtx);
+        const std::lock_guard<std::mutex> lock(mtx);
         yarp::sig::ImageOf<yarp::sig::PixelRgb> &outImg = imageOutPort.prepare();
 
         if( inputImage.data)
