@@ -96,7 +96,7 @@ class Finder : public yarp::os::RFModule,
 
         yDebug() << "image path is:" << imageStr;
 
-        templateImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
+        templateImage = cv::imread(imageStr, cv::IMREAD_COLOR);
 
         if(! templateImage.data || ! inputImage.data || method < 0 || method > 5 )
         {
