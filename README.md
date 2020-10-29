@@ -2,6 +2,8 @@ Robot vision with OpenCV tutorial part one
 ==========================
 [![GitPitch](https://gitpitch.com/assets/badge.svg)](https://gitpitch.com/vvv-school/tutorial_find-wally/master?grs=github&t=moon)
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/vvv-school/tutorial_find-wally)
+
 This first tutorial will guide you through integrating YARP with OpenCV and performing simple operations.
 
 The task at hand is to play the world's renown Where's Wally? (or Where's Waldo? in the US).
