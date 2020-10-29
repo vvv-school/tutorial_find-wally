@@ -239,7 +239,7 @@ class Finder : public yarp::os::RFModule,
                 cv::rectangle(out_image, cvPoint(x_pos,y_pos), cvPoint(x_pos + templateImage.cols,y_pos + templateImage.rows), cv::Scalar( 0, 255, 0), 2, 8);
             }
 
-            cvtColor(out_image, out_image, CV_BGR2RGB);
+            //cvtColor(out_image, out_image, CV_BGR2RGB);
 
             outImg = yarp::cv::fromCvMat<yarp::sig::PixelRgb>(out_image);
             imageOutPort.write();
