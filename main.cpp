@@ -70,7 +70,7 @@ class Finder : public yarp::os::RFModule,
 
         yDebug() << "image path is:" << imageStr;
 
-        inputImage = cv::imread(imageStr, CV_LOAD_IMAGE_COLOR);
+        inputImage = cv::imread(imageStr, cv::IMREAD_COLOR);
         if(! inputImage.data )
         {
             yError() <<"Could not open or find the first image " << imageStr;
