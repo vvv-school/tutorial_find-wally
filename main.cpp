@@ -61,7 +61,7 @@ class Finder : public yarp::os::RFModule,
     /********************************************************/
     bool load(const std::string &image)
     {
-        lock_guard<mutex> lck(mtx);
+        const std::lock_guard<std::mutex> lock(mtx);
         yarp::os::ResourceFinder rf;
         rf.setVerbose();
         rf.setDefaultContext(this->rf->getContext());
