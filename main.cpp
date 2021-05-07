@@ -230,10 +230,8 @@ class Finder : public yarp::os::RFModule,
                 //fill in the roi with the corresponding image
                 cv::Mat input_roi= inputImage(roi);
 
-                //Create a colour image and add the two images together
-                cv::Mat foreground(input_roi.size(), CV_8UC3, cv::Scalar(0,0,0));
-                input_roi.copyTo(foreground, input_roi);
-                foreground.copyTo(out_image(cv::Rect(x_pos, y_pos, foreground.cols, foreground.rows)));
+                //add the two images together
+                input_roi.copyTo(out_image(cv::Rect(x_pos,y_pos,input_roi.cols,input_roi.rows)));
 
                 //Draw a rectangle around the result
                 cv::rectangle(out_image, cvPoint(x_pos,y_pos), cvPoint(x_pos + templateImage.cols,y_pos + templateImage.rows), cv::Scalar( 0, 255, 0), 2, 8);
