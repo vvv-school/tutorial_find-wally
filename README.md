@@ -2,7 +2,7 @@ Robot vision with OpenCV tutorial part one
 ==========================
 [![GitPitch](https://gitpitch.com/assets/badge.svg)](https://gitpitch.com/vvv-school/tutorial_find-wally/master?grs=github&t=moon)
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/vvv-school/tutorial_find-wally)
+[![Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer)
 
 This first tutorial will guide you through integrating YARP with OpenCV and performing simple operations.
 
