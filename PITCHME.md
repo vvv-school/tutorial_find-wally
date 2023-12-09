@@ -39,7 +39,7 @@ include_directories(${YARP_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 
 ```CMakeLists
 target_link_libraries(${PROJECT_NAME} ${YARP_LIBRARIES}
-                                      ${OpenCV_LIBRARIES})
+                                      ${OpenCV_LIBS})
 ```
 ---
 ######<div style="text-align: left;">Code headers additions </div>
